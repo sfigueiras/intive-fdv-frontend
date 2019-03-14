@@ -20,7 +20,7 @@ const fetchPlayers = criteria => dispatch => {
     .then(json => dispatch(receivePlayers(criteria, json)))
 }
 
-const shouldFetchPlayers = (state, criteria) => {
+const shouldFetchPlayers = (state) => {
   const players = state.players
   if (!players) {
     return true
