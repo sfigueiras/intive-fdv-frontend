@@ -3,6 +3,7 @@ import { RECEIVE_PLAYERS, REQUEST_PLAYERS } from '../actions'
 
 const players = (state = {
   isFetching: false,
+  criteria: {},
   items: []
 }, action) => {
   switch (action.type) {
@@ -28,9 +29,7 @@ const visiblePlayers = (state = {}, action) => {
     case REQUEST_PLAYERS:
     case RECEIVE_PLAYERS:
       return {
-        ...state,
-        // Add the filter logic
-        items: players(state.players, action)
+        ...players(state.players, action)
       }
     default:
       return state
