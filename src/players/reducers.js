@@ -1,9 +1,8 @@
 import { combineReducers } from 'redux'
-import { RECEIVE_PLAYERS, REQUEST_PLAYERS } from '../actions'
+import { RECEIVE_PLAYERS, REQUEST_PLAYERS, UPDATE_FILTERS } from './actions'
 
 const players = (state = {
   isFetching: false,
-  criteria: {},
   items: []
 }, action) => {
   switch (action.type) {
@@ -24,6 +23,23 @@ const players = (state = {
   }
 }
 
+const playerFilters = (state = {
+  name: '',
+  position: '',
+  age: ''
+}, action) => {
+  const {type, ...criteria} = action
+  switch (type) {
+    case UPDATE_FILTERS:
+      return {
+        ...Object.assign({}, state, criteria)
+      }
+    default:
+      return state
+  }
+}
+
+// TODO: get this reducer out of the way
 const visiblePlayers = (state = {}, action) => {
   switch (action.type) {
     case REQUEST_PLAYERS:
@@ -37,7 +53,8 @@ const visiblePlayers = (state = {}, action) => {
 }
 
 const rootReducer = combineReducers({
-  visiblePlayers
+  visiblePlayers,
+  playerFilters
 })
 
 export default rootReducer

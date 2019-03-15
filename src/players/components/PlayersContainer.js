@@ -1,24 +1,25 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import PlayersTable from '../players/PlayersTable'
+import PlayersTable from './PlayersTable'
+import PlayersTableFilters from './PlayersTableFilters'
+import { getVisiblePlayers } from '../selectors'
 import { fetchPlayersIfNeeded } from '../actions'
 
 class PlayersContainer extends Component {
   constructor (props) {
     super(props)
-    this.componentDidMount.bind(this)
   }
 
   componentDidMount () {
-    const { dispatch } = this.props
-    dispatch(fetchPlayersIfNeeded({}))
+    this.props.dispatch(fetchPlayersIfNeeded())
   }
 
   render () {
     const { isFetching } = this.props
     return (
       <div>
+        <PlayersTableFilters/>
         {isFetching && 'loading'}
         {!isFetching &&
         <PlayersTable
@@ -43,19 +44,17 @@ PlayersContainer.propTypes = {
 }
 
 const mapStateToProps = (state) => {
-  const { criteria, visiblePlayers } = state
+  const { visiblePlayers } = state
   const {
     isFetching,
     items: players
   } = (visiblePlayers.items && visiblePlayers) || {
     isFetching: true,
     items: visiblePlayers.items,
-    criteria: {}
   }
 
   return {
-    criteria,
-    players,
+    players: getVisiblePlayers(state),
     isFetching
   }
 }

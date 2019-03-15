@@ -1,20 +1,24 @@
 export const REQUEST_PLAYERS = 'REQUEST_PLAYERS'
 export const RECEIVE_PLAYERS = 'RECEIVE_PLAYERS'
+export const UPDATE_FILTERS = 'UPDATE_FILTERS'
 
 export const requestPlayers = criteria => ({
-  type: REQUEST_PLAYERS,
-  criteria
+  type: REQUEST_PLAYERS
 })
 
 export const receivePlayers = (criteria, players) => ({
   type: RECEIVE_PLAYERS,
-  criteria,
   players,
   receivedAt: Date.now()
 })
 
+export const updateFilters = (criteria) => ({
+  type: UPDATE_FILTERS,
+  ...criteria
+})
+
 const fetchPlayers = criteria => dispatch => {
-  dispatch(requestPlayers(criteria))
+  dispatch(requestPlayers())
   return fetch(`https://football-players-b31f2.firebaseio.com/players.json`)
     .then(response => response.json())
     .then(json => dispatch(receivePlayers(criteria, json)))
@@ -30,8 +34,8 @@ const shouldFetchPlayers = (state) => {
   }
 }
 
-export const fetchPlayersIfNeeded = criteria => (dispatch, getState) => {
-  if (shouldFetchPlayers(getState(), criteria)) {
-    return dispatch(fetchPlayers(criteria))
+export const fetchPlayersIfNeeded = () => (dispatch, getState) => {
+  if (shouldFetchPlayers(getState())) {
+    return dispatch(fetchPlayers())
   }
 }

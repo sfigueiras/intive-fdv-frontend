@@ -2,9 +2,17 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const PlayerRow = (props) => (
-  <li>
-    {props.name}
-  </li>
+  <tr>
+    <td>
+      {props.name}
+    </td>
+    <td>
+      {props.position}
+    </td>
+    <td>
+      {props.contractUntil}
+    </td>
+  </tr>
 )
 
 PlayerRow.propTypes = {

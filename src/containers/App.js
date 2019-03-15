@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import '../App.css'
 import { connect } from 'react-redux'
-import PlayersContainer from './PlayersContainer'
+import PlayersContainer from '../players/components/PlayersContainer'
 
 class App extends Component {
   render () {
