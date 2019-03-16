@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
 
-const getPlayers = state => state.visiblePlayers.items || []
+const getPlayers = state => state.players.items || []
 
 const getPlayerFilterCriteria = state => {
   return state.playerFilters

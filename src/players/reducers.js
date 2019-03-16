@@ -2,9 +2,8 @@ import { combineReducers } from 'redux'
 import { RECEIVE_PLAYERS, REQUEST_PLAYERS, UPDATE_FILTERS } from './actions'
 
 const players = (state = {
-  isFetching: false,
-  items: []
 }, action) => {
+  debugger
   switch (action.type) {
     case REQUEST_PLAYERS:
       return {
@@ -53,7 +52,7 @@ const visiblePlayers = (state = {}, action) => {
 }
 
 const rootReducer = combineReducers({
-  visiblePlayers,
+  players,
   playerFilters
 })
 

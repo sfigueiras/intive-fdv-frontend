@@ -10,7 +10,7 @@ const PlayerRow = (props) => (
       {props.position}
     </td>
     <td>
-      {props.contractUntil}
+      {props.dateOfBirth}
     </td>
   </tr>
 )

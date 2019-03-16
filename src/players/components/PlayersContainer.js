@@ -21,6 +21,7 @@ class PlayersContainer extends Component {
       <div>
         <PlayersTableFilters/>
         {isFetching && 'loading'}
+        <br/>
         {!isFetching &&
         <PlayersTable
           players={this.props.players}
@@ -44,15 +45,13 @@ PlayersContainer.propTypes = {
 }
 
 const mapStateToProps = (state) => {
-  const { visiblePlayers } = state
+  const {players} = state
   const {
     isFetching,
-    items: players
-  } = (visiblePlayers.items && visiblePlayers) || {
+  } = (players.items && players) || {
     isFetching: true,
-    items: visiblePlayers.items,
+    items: players.items,
   }
-
   return {
     players: getVisiblePlayers(state),
     isFetching

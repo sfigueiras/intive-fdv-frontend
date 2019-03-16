@@ -5,9 +5,9 @@ const PlayersTable = (props) => (
   <table>
     <thead>
     <tr>
-      <th colSpan="4">Name</th>
-      <th colSpan="4">Position</th>
-      <th colSpan="4">Contract Until</th>
+      <th>Name</th>
+      <th>Position</th>
+      <th>Age</th>
     </tr>
     </thead>
     <tbody>
