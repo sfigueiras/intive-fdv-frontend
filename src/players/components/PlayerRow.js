@@ -1,23 +1,26 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import TableCell from '@material-ui/core/TableCell'
+import TableRow from '@material-ui/core/TableRow'
+
 
 const PlayerRow = (props) => (
-  <tr>
-    <td>
+  <TableRow>
+    <TableCell>
       {props.name}
-    </td>
-    <td>
+    </TableCell>
+    <TableCell>
       {props.position}
-    </td>
-    <td>
-      {props.dateOfBirth}
-    </td>
-  </tr>
+    </TableCell>
+    <TableCell>
+      {props.age}
+    </TableCell>
+  </TableRow>
 )
 
 PlayerRow.propTypes = {
   contractUntil: PropTypes.string.isRequired,
-  dateOfBirth: PropTypes.string.isRequired,
+  age: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   nationality: PropTypes.string.isRequired,
   position: PropTypes.string.isRequired

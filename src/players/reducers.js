@@ -3,7 +3,6 @@ import { RECEIVE_PLAYERS, REQUEST_PLAYERS, UPDATE_FILTERS } from './actions'
 
 const players = (state = {
 }, action) => {
-  debugger
   switch (action.type) {
     case REQUEST_PLAYERS:
       return {
