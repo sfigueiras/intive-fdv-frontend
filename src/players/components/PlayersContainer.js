@@ -5,6 +5,7 @@ import PlayersTable from './PlayersTable'
 import PlayersTableFilters from './PlayersTableFilters'
 import { getVisiblePlayers } from '../selectors'
 import { fetchPlayersIfNeeded } from '../actions'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 class PlayersContainer extends Component {
   constructor (props) {
@@ -20,7 +21,7 @@ class PlayersContainer extends Component {
     return (
       <div>
         <PlayersTableFilters/>
-        {isFetching && 'loading'}
+        {isFetching && <CircularProgress color="secondary"/>}
         <br/>
         {!isFetching &&
         <PlayersTable
@@ -45,7 +46,7 @@ PlayersContainer.propTypes = {
 }
 
 const mapStateToProps = (state) => {
-  const {players} = state
+  const { players } = state
   const {
     isFetching,
   } = (players.items && players) || {

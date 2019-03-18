@@ -54,8 +54,9 @@ class PlayersTableFilters extends Component {
     this.state = Object.assign({}, this.initialState)
   }
 
-  handleSubmit () {
+  handleSubmit (event) {
     this.props.dispatch(updateFilters(this.state))
+    event.preventDefault()
   }
 
   handleInputChange (event) {
@@ -88,6 +89,7 @@ class PlayersTableFilters extends Component {
                 onChange={this.handleInputChange.bind(this)}
               />
             </Grid>
+
             <Grid item sm={4}>
               <FormControl className={classes.formControl}>
                 <InputLabel htmlFor="position">Position</InputLabel>
@@ -107,6 +109,7 @@ class PlayersTableFilters extends Component {
                 </Select>
               </FormControl>
             </Grid>
+
             <Grid item sm={2}>
               <TextField
                 id="age"
@@ -117,9 +120,11 @@ class PlayersTableFilters extends Component {
                 onChange={this.handleInputChange.bind(this)}
               />
             </Grid>
+
             <Grid item sm={4}>
               <Button variant="contained" color="primary" onClick={this.handleSubmit.bind(this)}>
                 Search
+                <input type="submit" style={{ display: 'none' }}/>
               </Button>
               <Button className={classes.button} onClick={this.handleClearClick.bind(this)}>Clear</Button>
             </Grid>

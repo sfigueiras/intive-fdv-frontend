@@ -19,10 +19,8 @@ const PlayerRow = (props) => (
 )
 
 PlayerRow.propTypes = {
-  contractUntil: PropTypes.string.isRequired,
   age: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
-  nationality: PropTypes.string.isRequired,
   position: PropTypes.string.isRequired
 }
 

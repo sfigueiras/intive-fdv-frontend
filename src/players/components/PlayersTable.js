@@ -43,9 +43,7 @@ const PlayersTable = (props) => {
               <PlayerRow
                 name={player.name}
                 key={player.name} p
-                contractUntil={player.contractUntil}
                 age={player.age}
-                nationality={player.nationality}
                 position={player.position}
               />
             )
