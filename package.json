@@ -40,12 +40,6 @@
     "standard": "^12.0.1"
   },
   "jest": {
-    "setupFiles": [
-      "./src/setupTests.js"
-    ],
-    "transformIgnorePatterns": [
-      "node_modules",
-      "src/setupTests.js"
-    ]
+
   }
 }
