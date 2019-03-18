@@ -19,10 +19,11 @@ const styles = theme => ({
 })
 
 const PlayersTable = (props) => {
-  const { classes } = props
-  console.log(classes)
+  const { classes, players } = props
   return (
-    <Paper className={classes.root}>
+    <Paper className={classes.root + ' players-table-container'}>
+      { players.length === 0 && 'No players available'}
+      { players.length > 0 &&
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
@@ -37,12 +38,12 @@ const PlayersTable = (props) => {
             </TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
+        <TableBody className="players-table-body">
           {
-            props.players.map(player =>
+            players.map(player =>
               <PlayerRow
                 name={player.name}
-                key={player.name} p
+                key={player.name}
                 age={player.age}
                 position={player.position}
               />
@@ -50,12 +51,18 @@ const PlayersTable = (props) => {
           }
         </TableBody>
       </Table>
+      }
     </Paper>
   )
 }
 
 PlayersTable.propTypes = {
   classes: PropTypes.object.isRequired,
+  players: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    position: PropTypes.string.isRequired,
+    age: PropTypes.number.isRequired,
+  }))
 }
 
 export default withStyles(styles)(PlayersTable)

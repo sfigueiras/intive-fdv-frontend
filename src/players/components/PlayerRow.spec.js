@@ -2,16 +2,18 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import PlayerRow from './PlayerRow'
 
-describe('<PlayerRow>', function () {
-  const age = 25, name = 'Romelu Lukaku', position = 'Centre-Forward'
-  it('should render without throwing an error', function () {
-    const wrapper = shallow(
+describe('<PlayerRow>', () => {
+  const age = 25,
+    name = 'Romelu Lukaku',
+    position = 'Centre-Forward'
+
+  it('should render without throwing an error', () => {
+    expect(shallow(
       <PlayerRow
         age={age}
         name={name}
         position={position}/>
-    )
-    expect(wrapper)
+    ))
   })
 
   it('should render a .table-row element with 3 attributes', () => {
