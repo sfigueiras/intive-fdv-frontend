@@ -16,7 +16,7 @@ export const getVisiblePlayers = createSelector(
       .filter(player => {
           return (player.name === '' || !!player.name.match(nameRegExp)) &&
             (player.position === '' || !!player.position.match(criteria.position)) &&
-            (criteria.age === '' || player.age == parseInt(criteria.age))
+            (criteria.age === '' || player.age === parseInt(criteria.age))
         }
       )
   }

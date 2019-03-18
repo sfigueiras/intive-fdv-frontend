@@ -5,7 +5,7 @@ import TableRow from '@material-ui/core/TableRow'
 
 
 const PlayerRow = (props) => (
-  <TableRow>
+  <TableRow className="player-row">
     <TableCell>
       {props.name}
     </TableCell>

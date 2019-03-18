@@ -37,19 +37,6 @@ const playerFilters = (state = {
   }
 }
 
-// TODO: get this reducer out of the way
-const visiblePlayers = (state = {}, action) => {
-  switch (action.type) {
-    case REQUEST_PLAYERS:
-    case RECEIVE_PLAYERS:
-      return {
-        ...players(state.players, action)
-      }
-    default:
-      return state
-  }
-}
-
 const rootReducer = combineReducers({
   players,
   playerFilters

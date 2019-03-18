@@ -64,7 +64,7 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "jest",
-    "test:watch": "jest --watch",
+    "test:watch": "jest --watch --colors",
     "test:coverage": "jest --coverage --colors"
   },
   "eslintConfig": {

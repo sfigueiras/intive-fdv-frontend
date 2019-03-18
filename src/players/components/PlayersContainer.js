@@ -8,10 +8,6 @@ import { fetchPlayersIfNeeded } from '../actions'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
 class PlayersContainer extends Component {
-  constructor (props) {
-    super(props)
-  }
-
   componentDidMount () {
     this.props.dispatch(fetchPlayersIfNeeded())
   }
