@@ -8,6 +8,7 @@ import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableRow from '@material-ui/core/TableRow'
 import { withStyles } from '@material-ui/core/styles'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 const styles = theme => ({
   root: {
@@ -19,12 +20,15 @@ const styles = theme => ({
 })
 
 const PlayersTable = (props) => {
-  const { classes, players } = props
+  const { classes, players, isFetching } = props
   return (
     <Paper className={classes.root + ' players-table-container'}>
-      { players.length === 0 && 'No players available'}
+      { isFetching &&
+        <CircularProgress color="secondary" className="players-loading"/>
+      }
+      { !isFetching && players.length === 0 && 'No players available'}
       { players.length > 0 &&
-      <Table className={classes.table}>
+        <Table className={classes.table}>
         <TableHead>
           <TableRow>
             <TableCell>
@@ -58,6 +62,7 @@ const PlayersTable = (props) => {
 
 PlayersTable.propTypes = {
   classes: PropTypes.object.isRequired,
+  isFetching: PropTypes.bool.isRequired,
   players: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
     position: PropTypes.string.isRequired,

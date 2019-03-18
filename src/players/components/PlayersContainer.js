@@ -5,7 +5,6 @@ import PlayersTable from './PlayersTable'
 import PlayersTableFilters from './PlayersTableFilters'
 import { getVisiblePlayers } from '../selectors'
 import { fetchPlayersIfNeeded } from '../actions'
-import CircularProgress from '@material-ui/core/CircularProgress'
 
 class PlayersContainer extends Component {
   componentDidMount () {
@@ -13,17 +12,15 @@ class PlayersContainer extends Component {
   }
 
   render () {
-    const { isFetching } = this.props
+    const { isFetching, players } = this.props
     return (
       <div>
         <PlayersTableFilters/>
-        {isFetching && <CircularProgress color="secondary"/>}
         <br/>
-        {!isFetching &&
         <PlayersTable
-          players={this.props.players}
+          players={players}
+          isFetching={isFetching}
         />
-        }
       </div>
     )
   }
@@ -33,11 +30,9 @@ PlayersContainer.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired,
   players: PropTypes.arrayOf(PropTypes.shape({
-    contractUntil: PropTypes.string.isRequired,
-    dateOfBirth: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    nationality: PropTypes.string.isRequired,
     position: PropTypes.string.isRequired,
+    age: PropTypes.number.isRequired
   }))
 }
 
