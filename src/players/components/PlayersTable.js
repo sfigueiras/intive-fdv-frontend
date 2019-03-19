@@ -30,6 +30,9 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  tableContainer: {
+    margin: `${theme.spacing.unit * 1}px ${theme.spacing.unit * 2}px`
   }
 })
 
@@ -42,11 +45,11 @@ const PlayersTable = (props) => {
       }
       {!isFetching && players.length === 0 && 'No players available'}
 
-      <Paper className={classes.root + ' players-table-container'}>
+      <Paper className={classes.tableContainer + ' players-table-container'}>
         {players.length > 0 &&
         <Table className={classes.table}>
           <TableHead>
-            <TableRow className={classes.head}>
+            <TableRow>
               <CustomTableCell>
                 Name
               </CustomTableCell>

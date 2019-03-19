@@ -123,11 +123,11 @@ const PlayersTableFilters = (props) => {
           </Grid>
 
           <Grid item xs={12} className={classes.actions}>
-            <Button variant="contained" color="primary" onClick={handleSubmit}>
+            <Button id="update-filters" variant="contained" color="primary" onClick={handleSubmit}>
               Search
               <input type="submit" style={{ display: 'none' }}/>
             </Button>
-            <Button className={classes.button} onClick={handleClear}>Clear</Button>
+            <Button id="clear-filters" className={classes.button} onClick={handleClear}>Clear</Button>
           </Grid>
         </Grid>
       </form>
