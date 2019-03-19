@@ -1,7 +1,5 @@
-import React, { Component } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { updateFilters } from '../actions'
 import { withStyles } from '@material-ui/core/styles'
 import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -10,6 +8,7 @@ import Select from '@material-ui/core/Select'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
+import config from '../../config'
 
 const styles = theme => ({
   root: {
@@ -27,116 +26,103 @@ const styles = theme => ({
   }
 })
 
-const positions = [
-  '',
-  'Attacking Midfield',
-  'Central Midfield',
-  'Centre-Back',
-  'Centre-Forward',
-  'Defensive Midfield',
-  'Keeper',
-  'Left Midfield',
-  'Left Wing',
-  'Left-Back',
-  'Right-Back'
-]
+const positions = config.PLAYER_POSITIONS
 
-class PlayersTableFilters extends Component {
-  constructor (props) {
-    super(props)
+const PlayersTableFilters = (props) => {
+  const initialState = () => ({
+    name: '',
+    position: '',
+    age: ''
+  })
 
-    this.initialState = {
-      name: '',
-      position: '',
-      age: ''
-    }
+  const [filters, setValues] = useState(initialState())
 
-    this.state = Object.assign({}, this.initialState)
-  }
+  const {
+    classes,
+    onFiltersSubmitted,
+  } = props
 
-  handleSubmit (event) {
-    this.props.dispatch(updateFilters(this.state))
-    event.preventDefault()
-  }
-
-  handleInputChange (event) {
-    const target = event.target
-    const value = target.value
-    const name = target.name
-
-    this.setState({
-      [name]: value
+  function handleChange (event) {
+    setValues({
+      ...filters,
+      [event.target.name]: event.target.value
     })
   }
 
-  handleClearClick () {
-    this.setState(Object.assign({}, this.initialState))
-    this.props.dispatch(updateFilters(this.initialState))
+  function handleSubmit (event) {
+    event.preventDefault()
+    onFiltersSubmitted(filters)
   }
 
-  render () {
-    const { classes } = this.props
-    return (
-      <div id="playersTableFilters" style={{ margin: '20px 40px' }}>
-        <form onSubmit={this.handleSubmit.bind(this)}>
-          <Grid container spacing={24}>
-            <Grid item sm={2}>
-              <TextField
-                id="name"
-                name="name"
-                label="Name"
-                value={this.state.name}
-                onChange={this.handleInputChange.bind(this)}
-              />
-            </Grid>
+  function handleClear () {
+    setValues(initialState())
+  }
 
-            <Grid item sm={4}>
-              <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="position">Position</InputLabel>
-                <Select
-                  value={this.state.position}
-                  onChange={this.handleInputChange.bind(this)}
-                  inputProps={{
-                    name: 'position',
-                    id: 'position',
-                  }}
-                >
-                  {
-                    positions.map(position => (
-                      <MenuItem key={position} value={position}>{position}</MenuItem>
-                    ))
-                  }
-                </Select>
-              </FormControl>
-            </Grid>
+  useEffect(() => {
+    if (JSON.stringify(filters) === JSON.stringify(initialState())) {
+      onFiltersSubmitted(filters)
+    }
+  }, [filters])
 
-            <Grid item sm={2}>
-              <TextField
-                id="age"
-                label="Age"
-                name="age"
-                value={this.state.age}
-                type="number"
-                onChange={this.handleInputChange.bind(this)}
-              />
-            </Grid>
-
-            <Grid item sm={4}>
-              <Button variant="contained" color="primary" onClick={this.handleSubmit.bind(this)}>
-                Search
-                <input type="submit" style={{ display: 'none' }}/>
-              </Button>
-              <Button className={classes.button} onClick={this.handleClearClick.bind(this)}>Clear</Button>
-            </Grid>
+  return (
+    <div id="playersTableFilters" style={{ margin: '20px 40px' }}>
+      <form onSubmit={onFiltersSubmitted}>
+        <Grid container spacing={24} md={12}>
+          <Grid item sm={2}>
+            <TextField
+              id="name"
+              name="name"
+              label="Name"
+              value={filters.name}
+              onChange={handleChange}
+            />
           </Grid>
-        </form>
-      </div>
-    )
-  }
+
+          <Grid item sm={4}>
+            <FormControl className={classes.formControl}>
+              <InputLabel htmlFor="position">Position</InputLabel>
+              <Select
+                value={filters.position}
+                onChange={handleChange}
+                inputProps={{
+                  name: 'position',
+                  id: 'position',
+                }}>
+                {
+                  positions.map(position => (
+                    <MenuItem key={position} value={position}>{position}</MenuItem>
+                  ))
+                }
+              </Select>
+            </FormControl>
+          </Grid>
+
+          <Grid item sm={2}>
+            <TextField
+              id="age"
+              label="Age"
+              name="age"
+              value={filters.age}
+              type="number"
+              onChange={handleChange}
+            />
+          </Grid>
+
+          <Grid item sm={4}>
+            <Button variant="contained" color="primary" onClick={handleSubmit}>
+              Search
+              <input type="submit" style={{ display: 'none' }}/>
+            </Button>
+            <Button className={classes.button} onClick={handleClear}>Clear</Button>
+          </Grid>
+        </Grid>
+      </form>
+    </div>
+  )
 }
 
 PlayersTableFilters.propTypes = {
-  dispatch: PropTypes.func.isRequired
+  onFiltersSubmitted: PropTypes.func.isRequired
 }
 
-export default connect()(withStyles(styles)(PlayersTableFilters))
+export default withStyles(styles)(PlayersTableFilters)

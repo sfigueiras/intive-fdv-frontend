@@ -4,18 +4,30 @@ import { connect } from 'react-redux'
 import PlayersTable from './PlayersTable'
 import PlayersTableFilters from './PlayersTableFilters'
 import { getVisiblePlayers } from '../selectors'
-import { fetchPlayersIfNeeded } from '../actions'
+import { fetchPlayersIfNeeded, updateFilters } from '../actions'
 
 class PlayersContainer extends Component {
+  constructor (props) {
+    super(props)
+
+    this.onFiltersSubmitted= this.onFiltersSubmitted.bind(this)
+  }
+
   componentDidMount () {
     this.props.dispatch(fetchPlayersIfNeeded())
+  }
+
+  onFiltersSubmitted (filters) {
+    this.props.dispatch(updateFilters(filters))
   }
 
   render () {
     const { isFetching, players } = this.props
     return (
       <div>
-        <PlayersTableFilters/>
+        <PlayersTableFilters
+          onFiltersSubmitted={this.onFiltersSubmitted}
+        />
         <br/>
         <PlayersTable
           players={players}
