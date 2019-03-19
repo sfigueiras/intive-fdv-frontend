@@ -11,18 +11,29 @@ import Grid from '@material-ui/core/Grid'
 import config from '../../config'
 
 const styles = theme => ({
-  root: {
+  container: {
     display: 'flex',
-    flexWrap: 'wrap',
+    margin: `${theme.spacing.unit * 3}px ${theme.spacing.unit * 10}px`,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   formControl: {
-    minWidth: 120,
+    minWidth: 120
   },
   selectEmpty: {
-    marginTop: theme.spacing.unit * 2,
+    marginTop: theme.spacing.unit * 2
+  },
+  select: {
+    // Material UI's API doesnt provide a fullWidth props as
+    // it does with the TextField element for example.
+    // This is a workaround
+    width: '100%'
+  },
+  actions: {
+    textAlign: 'center'
   },
   button: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing.unit
   }
 })
 
@@ -65,21 +76,23 @@ const PlayersTableFilters = (props) => {
   }, [filters])
 
   return (
-    <div id="playersTableFilters" style={{ margin: '20px 40px' }}>
+    <div id="playersTableFilters" className={classes.container}>
       <form onSubmit={onFiltersSubmitted}>
-        <Grid container spacing={24} md={12}>
-          <Grid item sm={2}>
+        <Grid container
+              spacing={24}>
+          <Grid item xs={12} sm={4}>
             <TextField
               id="name"
               name="name"
               label="Name"
               value={filters.name}
+              fullWidth={true}
               onChange={handleChange}
             />
           </Grid>
 
-          <Grid item sm={4}>
-            <FormControl className={classes.formControl}>
+          <Grid item xs={12} sm={4}>
+            <FormControl className={classes.formControl + ' ' + classes.select}>
               <InputLabel htmlFor="position">Position</InputLabel>
               <Select
                 value={filters.position}
@@ -97,18 +110,19 @@ const PlayersTableFilters = (props) => {
             </FormControl>
           </Grid>
 
-          <Grid item sm={2}>
+          <Grid item xs={12} sm={4}>
             <TextField
               id="age"
               label="Age"
               name="age"
               value={filters.age}
               type="number"
+              fullWidth={true}
               onChange={handleChange}
             />
           </Grid>
 
-          <Grid item sm={4}>
+          <Grid item xs={12} className={classes.actions}>
             <Button variant="contained" color="primary" onClick={handleSubmit}>
               Search
               <input type="submit" style={{ display: 'none' }}/>

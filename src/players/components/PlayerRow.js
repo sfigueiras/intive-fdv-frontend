@@ -3,9 +3,8 @@ import PropTypes from 'prop-types'
 import TableCell from '@material-ui/core/TableCell'
 import TableRow from '@material-ui/core/TableRow'
 
-
 const PlayerRow = (props) => (
-  <TableRow className="player-row">
+  <TableRow className={props.className + ' player-row'}>
     <TableCell>
       {props.name}
     </TableCell>
@@ -21,7 +20,8 @@ const PlayerRow = (props) => (
 PlayerRow.propTypes = {
   age: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
-  position: PropTypes.string.isRequired
+  position: PropTypes.string.isRequired,
+  className: PropTypes.string
 }
 
 export default PlayerRow

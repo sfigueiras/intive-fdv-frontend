@@ -10,53 +10,71 @@ import TableRow from '@material-ui/core/TableRow'
 import { withStyles } from '@material-ui/core/styles'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
+const CustomTableCell = withStyles(theme => ({
+  head: {
+    backgroundColor: theme.palette.secondary.main,
+    color: theme.palette.common.white,
+  }
+}))(TableCell)
+
 const styles = theme => ({
-  root: {
-    margin: `${theme.spacing.unit * 3}px 20px 0 20px`
-  },
   table: {
-    width: '100%'
+    width: '100%',
   },
+  row: {
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.background.default,
+    }
+  },
+  container: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
 })
 
 const PlayersTable = (props) => {
   const { classes, players, isFetching } = props
   return (
-    <Paper className={classes.root + ' players-table-container'}>
-      { isFetching &&
+    <div className={classes.container}>
+      {isFetching &&
         <CircularProgress color="secondary" className="players-loading"/>
       }
-      { !isFetching && players.length === 0 && 'No players available'}
-      { players.length > 0 &&
+      {!isFetching && players.length === 0 && 'No players available'}
+
+      <Paper className={classes.root + ' players-table-container'}>
+        {players.length > 0 &&
         <Table className={classes.table}>
-        <TableHead>
-          <TableRow>
-            <TableCell>
-              Name
-            </TableCell>
-            <TableCell>
-              Position
-            </TableCell>
-            <TableCell>
-              Age
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody className="players-table-body">
-          {
-            players.map(player =>
-              <PlayerRow
-                name={player.name}
-                key={player.name}
-                age={player.age}
-                position={player.position}
-              />
-            )
-          }
-        </TableBody>
-      </Table>
-      }
-    </Paper>
+          <TableHead>
+            <TableRow className={classes.head}>
+              <CustomTableCell>
+                Name
+              </CustomTableCell>
+              <CustomTableCell>
+                Position
+              </CustomTableCell>
+              <CustomTableCell>
+                Age
+              </CustomTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody className="players-table-body">
+            {
+              players.map(player =>
+                <PlayerRow
+                  name={player.name}
+                  key={player.name}
+                  age={player.age}
+                  className={classes.row}
+                  position={player.position}
+                />
+              )
+            }
+          </TableBody>
+        </Table>
+        }
+      </Paper>
+    </div>
   )
 }
 

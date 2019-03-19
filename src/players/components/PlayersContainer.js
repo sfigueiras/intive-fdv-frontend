@@ -28,7 +28,6 @@ class PlayersContainer extends Component {
         <PlayersTableFilters
           onFiltersSubmitted={this.onFiltersSubmitted}
         />
-        <br/>
         <PlayersTable
           players={players}
           isFetching={isFetching}
