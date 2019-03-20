@@ -10,7 +10,7 @@ class PlayersContainer extends Component {
   constructor (props) {
     super(props)
 
-    this.onFiltersSubmitted= this.onFiltersSubmitted.bind(this)
+    this.onFiltersSubmitted = this.onFiltersSubmitted.bind(this)
   }
 
   componentDidMount () {
@@ -22,7 +22,7 @@ class PlayersContainer extends Component {
   }
 
   render () {
-    const { isFetching, players } = this.props
+    const { isFetching, errorMessage, players } = this.props
     return (
       <div>
         <PlayersTableFilters
@@ -31,6 +31,7 @@ class PlayersContainer extends Component {
         <PlayersTable
           players={players}
           isFetching={isFetching}
+          errorMessage={errorMessage}
         />
       </div>
     )
@@ -40,6 +41,7 @@ class PlayersContainer extends Component {
 PlayersContainer.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired,
+  errorMessage: PropTypes.string,
   players: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
     position: PropTypes.string.isRequired,
@@ -49,15 +51,20 @@ PlayersContainer.propTypes = {
 
 const mapStateToProps = (state) => {
   const { players } = state
+  debugger
+
   const {
     isFetching,
-  } = (players.items && players) || {
+    errorMessage,
+  } = ((!!players.items || !!players.errorMessage) && players) || {
     isFetching: true,
-    items: players.items,
+    items: players.items
   }
+
   return {
     players: getVisiblePlayers(state),
-    isFetching
+    isFetching,
+    errorMessage
   }
 }
 

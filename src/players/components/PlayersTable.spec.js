@@ -21,7 +21,7 @@ describe('<PlayersTable>', () => {
 
   it('should render a placeholder if players is empty', () => {
     const wrapper = render(<PlayersTable players={[]} isFetching={false}/>)
-    expect(wrapper.text()).toEqual('No players available')
+    expect(wrapper.text()).toEqual('No players matched your search :(')
   })
 
   it('should render a list of <PlayerRow>s if players not empty', () => {
@@ -33,5 +33,17 @@ describe('<PlayersTable>', () => {
     const wrapper = render(<PlayersTable players={players()} isFetching={true}/>)
 
     expect(wrapper.find('players-loading')).toBeDefined()
+  })
+
+  it('should display an error message when defined', () => {
+    const errorMessage = 'There was an error fetching players'
+    const wrapper = render(
+      <PlayersTable
+        players={[]}
+        isFetching={false}
+        errorMessage={errorMessage}/>
+    )
+
+    expect(wrapper.text()).toEqual(errorMessage)
   })
 })

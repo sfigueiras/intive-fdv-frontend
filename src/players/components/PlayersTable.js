@@ -37,13 +37,19 @@ const styles = theme => ({
 })
 
 const PlayersTable = (props) => {
-  const { classes, players, isFetching } = props
+  const { classes, players, isFetching, errorMessage } = props
   return (
     <div className={classes.container}>
       {isFetching &&
-        <CircularProgress color="secondary" className="players-loading"/>
+      <CircularProgress color="secondary" className="players-loading"/>
       }
-      {!isFetching && players.length === 0 && 'No players available'}
+
+      {!isFetching && !!errorMessage &&
+        errorMessage
+      }
+
+      {!isFetching && !errorMessage &&
+        players.length === 0 && 'No players matched your search :('}
 
       <Paper className={classes.tableContainer + ' players-table-container'}>
         {players.length > 0 &&
@@ -88,7 +94,8 @@ PlayersTable.propTypes = {
     name: PropTypes.string.isRequired,
     position: PropTypes.string.isRequired,
     age: PropTypes.number.isRequired,
-  }))
+  })),
+  errorMessage: PropTypes.string
 }
 
 export default withStyles(styles)(PlayersTable)

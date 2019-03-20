@@ -1,34 +1,38 @@
 import { combineReducers } from 'redux'
-import { RECEIVE_PLAYERS, REQUEST_PLAYERS, UPDATE_FILTERS } from './actions'
+import * as actionTypes from './actionTypes'
 
-const players = (state = {
-}, action) => {
+export const players = (state = {}, action) => {
   switch (action.type) {
-    case REQUEST_PLAYERS:
+    case actionTypes.REQUEST_PLAYERS:
       return {
         ...state,
         isFetching: true
       }
-    case RECEIVE_PLAYERS:
+    case actionTypes.RECEIVE_PLAYERS:
       return {
         ...state,
         isFetching: false,
-        items: action.players,
-        lastUpdated: action.receivedAt
+        items: action.players
+      }
+    case actionTypes.ERROR_FETCHING_PLAYERS:
+      return {
+        ...state,
+        errorMessage: action.players.message,
+        isFetching: false
       }
     default:
       return state
   }
 }
 
-const playerFilters = (state = {
+export const playerFilters = (state = {
   name: '',
   position: '',
   age: ''
 }, action) => {
-  const {type, ...criteria} = action
+  const { type, ...criteria } = action
   switch (type) {
-    case UPDATE_FILTERS:
+    case actionTypes.UPDATE_FILTERS:
       return {
         ...Object.assign({}, state, criteria)
       }

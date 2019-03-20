@@ -1,27 +1,33 @@
-export const REQUEST_PLAYERS = 'REQUEST_PLAYERS'
-export const RECEIVE_PLAYERS = 'RECEIVE_PLAYERS'
-export const UPDATE_FILTERS = 'UPDATE_FILTERS'
+import config from '../config'
+import * as actionTypes from './actionTypes'
 
 export const requestPlayers = () => ({
-  type: REQUEST_PLAYERS
+  type: actionTypes.REQUEST_PLAYERS
 })
 
 export const receivePlayers = (players) => ({
-  type: RECEIVE_PLAYERS,
-  players,
-  receivedAt: Date.now()
+  type: actionTypes.RECEIVE_PLAYERS,
+  players
+})
+
+export const errorFetchingPlayers = () => ({
+  type: actionTypes.ERROR_FETCHING_PLAYERS,
+  players: {
+    message: 'There was an error fetching players'
+  }
 })
 
 export const updateFilters = (criteria) => ({
-  type: UPDATE_FILTERS,
+  type: actionTypes.UPDATE_FILTERS,
   ...criteria
 })
 
-const fetchPlayers = () => dispatch => {
+export const fetchPlayers = () => dispatch => {
   dispatch(requestPlayers())
-  return fetch(`https://football-players-b31f2.firebaseio.com/players.json`)
+  return fetch(config.API_ENDPOINT)
     .then(response => response.json())
     .then(json => dispatch(receivePlayers(json)))
+    .catch(() => dispatch(errorFetchingPlayers()))
 }
 
 const shouldFetchPlayers = (state) => {
