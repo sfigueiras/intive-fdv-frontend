@@ -18,7 +18,7 @@ const Header = (props) => {
   const { classes, title } = props
   return (
     <header className={classes.header}>
-      <h1 className={classes.title}>{title}</h1>
+      <h1 id="header-title" className={classes.title}>{title}</h1>
     </header>
   )
 }

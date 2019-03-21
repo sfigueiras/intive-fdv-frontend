@@ -51,7 +51,6 @@ PlayersContainer.propTypes = {
 
 const mapStateToProps = (state) => {
   const { players } = state
-  debugger
 
   const {
     isFetching,

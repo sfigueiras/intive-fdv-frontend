@@ -1,39 +1,30 @@
 import React from 'react'
 import configureStore from 'redux-mock-store'
-import { mount } from 'enzyme'
 import PlayersContainer from './PlayersContainer'
+import { mount } from 'enzyme'
 import { Provider } from 'react-redux'
+import thunk from 'redux-thunk'
 
 const initialState = {
-  players: [],
+  players: {},
   playerFilters: {
     name: '',
-    position: '',
-    age: ''
+    age: '',
+    position: ''
   },
-  dispatch: () => {},
-  isFetching: true
+  dispatch: () => {}
 }
 
-const mockStore = configureStore()
-let wrapper, store, mocks
+const mockStore = configureStore([thunk])
+let wrapper, store
 
 beforeEach(() => {
   store = mockStore(initialState)
-  mocks = {
-    fetchPlayersIfNeeded: jest.fn().mockImplementation(() => {})
-  }
-  //wrapper = mount(<Provider store={store}><PlayersContainer/></Provider>)
+  wrapper = mount(<Provider store={store}><PlayersContainer/></Provider>)
 })
 
 describe('<PlayersContainer>', () => {
   it('should render without throwing an error', () => {
-  })
-
-  it('should call fetchPlayersIfNeeded', () => {
-  })
-
-  it('should render a <PlayerTableFilter> and <PlayersTable> element', () => {
-
+    expect(wrapper)
   })
 })

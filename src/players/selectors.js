@@ -2,7 +2,7 @@ import { createSelector } from 'reselect'
 import calculateAge from '../utils/calculateAge'
 
 export const getPlayersWithAge = state => {
-  return state.players.items.map(player => ({
+  return state.players.items && state.players.items.map(player => ({
     ...player,
     age: calculateAge(new Date(player.dateOfBirth))
   })) || []
