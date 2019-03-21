@@ -59,11 +59,6 @@ describe('<App>', () => {
     expect(screen.find('tr.player-row')).toHaveLength(0)
 
     await waitUntil(() => Object.keys(screen.state().storeState.players).length > 0)
-    expect(
-      dispatchSpy
-    ).toHaveBeenLastCalledWith(
-      { type: actionTypes.RECEIVE_PLAYERS, players }
-    )
 
     screen.update()
 
