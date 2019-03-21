@@ -77,11 +77,13 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "async-wait-until": "^1.2.4",
     "babel-jest": "^24.5.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.11.2",
     "fetch-mock": "^7.3.1",
     "jest": "^24.5.0",
+    "nock": "^10.0.6",
     "redux-mock-store": "^1.5.3",
     "standard": "^12.0.1"
   },
