@@ -1,18 +1,20 @@
 import { createSelector } from 'reselect'
 import calculateAge from '../utils/calculateAge'
 
-const getPlayers = state => state.players.items || []
-
-const getPlayerFilterCriteria = state => {
-  return state.playerFilters
+export const getPlayersWithAge = state => {
+  return state.players.items.map(player => ({
+    ...player,
+    age: calculateAge(new Date(player.dateOfBirth))
+  })) || []
 }
 
+const getPlayerFilterCriteria = state => state.playerFilters
+
 export const getVisiblePlayers = createSelector(
-  [getPlayerFilterCriteria, getPlayers],
+  [getPlayerFilterCriteria, getPlayersWithAge],
   (criteria, players) => {
     const nameRegExp = new RegExp(`${criteria.name}`, 'gi')
     return players
-      .map(player => ({ ...player, age: calculateAge(new Date(player.dateOfBirth)) }))
       .filter(player => {
           return (player.name === '' || !!player.name.match(nameRegExp)) &&
             (player.position === '' || !!player.position.match(criteria.position)) &&
