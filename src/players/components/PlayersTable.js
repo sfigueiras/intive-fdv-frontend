@@ -12,7 +12,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 
 const CustomTableCell = withStyles(theme => ({
   head: {
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.secondary.light,
     color: theme.palette.common.white,
   }
 }))(TableCell)
@@ -24,7 +24,8 @@ const styles = theme => ({
   row: {
     '&:nth-of-type(odd)': {
       backgroundColor: theme.palette.background.default,
-    }
+    },
+    minWidth: '120px'
   },
   container: {
     display: 'flex',

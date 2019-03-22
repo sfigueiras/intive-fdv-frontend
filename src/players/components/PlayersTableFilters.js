@@ -119,6 +119,7 @@ const PlayersTableFilters = (props) => {
               id="name"
               name="name"
               label="Name"
+              error={!!filterErrors.name}
               value={filters.name}
               fullWidth={true}
               helperText={filterErrors.name}
@@ -150,6 +151,7 @@ const PlayersTableFilters = (props) => {
               id="age"
               label="Age"
               name="age"
+              error={!!filterErrors.age}
               value={filters.age}
               type="number"
               fullWidth={true}
