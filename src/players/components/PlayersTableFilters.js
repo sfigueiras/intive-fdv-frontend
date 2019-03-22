@@ -40,13 +40,20 @@ const styles = theme => ({
 const positions = config.PLAYER_POSITIONS
 
 const PlayersTableFilters = (props) => {
-  const initialState = () => ({
+  const initialFilters = () => ({
     name: '',
     position: '',
     age: ''
   })
 
-  const [filters, setValues] = useState(initialState())
+  const [filters, setValues] = useState(initialFilters())
+
+  const initialFilterErrors = () => ({
+    name: '',
+    age: ''
+  })
+
+  const [filterErrors, setFilterErrors] = useState(initialFilterErrors())
 
   const {
     classes,
@@ -62,15 +69,42 @@ const PlayersTableFilters = (props) => {
 
   function handleSubmit (event) {
     event.preventDefault()
-    onFiltersSubmitted(filters)
+
+    if (formIsValid(filters, filterErrors)) {
+      onFiltersSubmitted(filters)
+    }
   }
 
+
   function handleClear () {
-    setValues(initialState())
+    setValues(initialFilters())
+  }
+
+  function formIsValid (filters, filterErrors) {
+    const formEmpty = Object.values(filters).filter(value => value !== '').length === 0
+    const hasValidationErrors = Object.values(filterErrors).filter(value => value !== '').length > 0
+
+    return !formEmpty && !hasValidationErrors
+  }
+
+  function validateFilters (filters) {
+    const updatedFilterErrors = {}
+
+    if (filters.name !== '' && !filters.name.match(/^[a-zA-Z]+$/)) {
+      updatedFilterErrors.name = 'Name should contain only letters'
+    }
+
+    if (filters.age !== '' && filters.age < 18 || filters.age > 40) {
+      updatedFilterErrors.age = 'Age should be between 18 and 40 years'
+    }
+
+    setFilterErrors(updatedFilterErrors)
   }
 
   useEffect(() => {
-    if (JSON.stringify(filters) === JSON.stringify(initialState())) {
+    validateFilters(filters)
+
+    if (JSON.stringify(filters) === JSON.stringify(initialFilters())) {
       onFiltersSubmitted(filters)
     }
   }, [filters])
@@ -87,6 +121,7 @@ const PlayersTableFilters = (props) => {
               label="Name"
               value={filters.name}
               fullWidth={true}
+              helperText={filterErrors.name}
               onChange={handleChange}
             />
           </Grid>
@@ -118,12 +153,15 @@ const PlayersTableFilters = (props) => {
               value={filters.age}
               type="number"
               fullWidth={true}
+              inputProps={{ min: '18', max: '40', step: '1' }}
+              helperText={filterErrors.age}
               onChange={handleChange}
             />
           </Grid>
 
           <Grid item xs={12} className={classes.actions}>
-            <Button id="update-filters" variant="contained" color="primary" onClick={handleSubmit}>
+            <Button id="update-filters" variant="contained" color="primary" onClick={handleSubmit}
+                    disabled={!formIsValid(filters, filterErrors)}>
               Search
               <input type="submit" style={{ display: 'none' }}/>
             </Button>
